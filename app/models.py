@@ -1,19 +1,23 @@
 #-*-coding:utf8-*-
 class User():
-	self.id = -1
-	self.username = ""
-	self.email = ""
-	self.role = -1
-	self.token = ""
-		
+	#User  attributes
+	attributes = ['id','username','email','role','defines']	
 
-	def isauthenticated(self):
-		return self.id>0 and (self.username!="" or self.token!="")
+	def __init__(self,db):
+		#use database obj initialize class User
+		self.db = db	
 
-	def  validate(username,passwd,db):
-		sql = "select id,username,email,role from users where username = %s and passwd = %s"
-		cursor = db.cursor()
-		count = cursor.execute(sql,(username,passwd))
+	def  validate(self,username,passwd):
+		sql = "select id,username,email,role,defines from users where username = %s and passwd = %s"
+		cur = self.db.cursor()
+		#use cur.execute() to post args into sql in case of  sql injection
+		count = cur.execute(sql,(username,passwd))
 		result = cur.fetchall()
-		
-	
+		if len(result)!=1:
+			return None
+		else:
+			#turn sql result with user info into dict
+			self.data = {}
+			for index,item in enumerate(result[0]):
+				self.data[User.attributes[index]] = item
+		return self.data

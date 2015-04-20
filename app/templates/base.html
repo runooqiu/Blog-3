@@ -25,10 +25,10 @@
 <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(function () {
-	$("#identify").mouseover(function () {
+	$(".identify").mouseover(function () {
 	$(this).attr("class","active");
 })
-$("#identify").mouseout(function () {
+$(".identify").mouseout(function () {
 	$(this).removeClass("active");
 })
 });
@@ -62,8 +62,8 @@ $("#identify").mouseout(function () {
             <li><a href="#contact">Contact</a></li> -->
           </ul>
           <ul class="nav navbar-nav navbar-right">
-          	{% if user %}
-            <li  id="identify"><a href="/admin">{{user.nickname}}</a></li>
+          	{% if userinfo %}
+            <li  class="identify"><a href="/admin">{{userinfo["username"]}}</a></li><li  class="identify"><a href="/logout">Sign Out</a></li>
             {% else %}
             <li  id="identify"><a href="/login">Sign In</a></li>
             {%endif%}
